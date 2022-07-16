@@ -1,15 +1,22 @@
 # verant
 
-> **k**eep **i**t **s**imple **s**tupid
-> back to the roots (tm), inspired by @remix_run
+## commands
 
-## concept
+```sh
+# start.sh
+docker run --rm -it --name server \
+  -v $PWD/.server/nginx.conf:/etc/nginx/nginx.conf \
+  -v $PWD/.server/n.js:/n.js \
+  -p 3000:80 \
+  nginx:alpine
+```
 
-tbd
-
-## resources
-
-+ https://www.nginx.com/blog/validating-oauth-2-0-access-tokens-nginx/
-+ https://github.com/balazs4/aws-docker-compose
-+ http://nginx.org/en/docs/http/ngx_http_js_module.html
-+ https://github.com/balazs4/njs-examples
+```sh
+# dev.sh
+while inotifywait -q -e modify -r .
+do
+  docker exec server nginx -s reload
+  sleep 1s
+  curl http://localhost:3000/hello -i | alola
+done
+```
